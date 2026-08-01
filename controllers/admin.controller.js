@@ -5,29 +5,6 @@ import fs from 'fs'
 const __filename = fileURLToPath(import.meta.url)
 const __dirname = dirname(__filename)
 
-let articles = []
-const getArticles = async(req, res) => {
-    try{
-        const files = await fs.promises.readdir(path.join('articles'));
-        await Promise.all(files.map(async (p) => {
-            try{
-                const fileData = await fs.promises.readFile(path.join('articles', p), 'utf8')
-                const article = JSON.parse(fileData)
-                return articles.push(article)
-            }catch(err){
-                console.log(err)
-            }
-        }))
-        if(articles.length === 0){
-            return 
-        }
-        return articles
-
-    }catch(err){
-        console.log(err)
-    }
-}
-
 export const addArticle = async(req, res) => {
     const {title, content} = req.body
     try{
@@ -50,7 +27,7 @@ export const addArticle = async(req, res) => {
         }
         
         
-        fs.promises.writeFile(path.join('articles', `${id}.json`), JSON.stringify(newArticle))
+        await fs.promises.writeFile(path.join('articles', `${id}.json`), JSON.stringify(newArticle))
         await getArticles()
         console.log(articles)
         return res.redirect('/articles')
