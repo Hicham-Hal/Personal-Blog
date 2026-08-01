@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Update</title>
+</head>
+<body>
+    <div>
+        <h1>Update Article</h1>
+        <form action="/dashboard/article/" method="post">
+            <div style="display: inline; align-items: center; justify-items: start;">
+                <div style="margin-bottom: 20px;">
+                    <input type="text" name="title" id="" placeholder="article Name">
+                </div>
+                <div style="margin-bottom: 20px;">
+                    <input type="text" name="" placeholder="Publishig Date">
+                </div>
+                <div>
+                    <textarea name="content" id="" placeholder="Content"></textarea>
+                </div>
+                <button style="margin-top: 20px;" type="submit">Add</button>
+            </div>
+        </form>
+        <% if(msg) { %>
+            <h3><%= msg %></h3>
+        <% } %>
+    </div>
+</body>
+</html>

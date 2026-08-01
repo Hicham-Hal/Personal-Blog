@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home</title>
+</head>
+<body>
+    <div style="padding: 20px 200px 10px 50px;">
+        <div style="display: flex; align-items: center; justify-content: space-between;">
+            <h1 style="color: rgb(110, 110, 110);">Personal Blog</h1>
+            <a href="/dashboard/add" style="text-decoration: none;"><button>Add</button></a>
+        </div>
+        <% articles?.forEach(article => { %>
+                <div style="display: flex; align-items: center; justify-content: space-between;">
+                    <h3 style="color: rgb(70, 70, 70); font-size: 26px;"><%= article.title %></h3>
+                    <div style="display: flex; align-items: center; justify-content: center; gap: 5px;">
+                        <a href="/dashboard/update/<%= article.id %>" style="text-decoration: none;"><span style="color: rgb(70, 70, 70); font-size: 18px;">Edit</span></a>
+                        <form action="/dashboard/delete/<%= article.id %>" method="post">
+                            <button type="submit" style="cursor: pointer; border: none ; color: rgb(70, 70, 70); font-size: 18px;">Delete</button>
+                        </form>
+                    </div>
+                </div>
+        <% }) %>
+    </div>
+    <% if(!articles || articles.length === 0 || articles === undefined) {%>
+        <h4>No article exist</h4>
+    <% } %>
+</body>
+</html>
