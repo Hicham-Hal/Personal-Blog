@@ -8,7 +8,7 @@ const __dirname = dirname(__filename)
 
 export const getArticles = async(req, res) => {
     let articles = []
-    let isAdmin = false
+    let isAdmin = true
     try{
         const files = await fs.promises.readdir(path.join('articles'));
         await Promise.all(files.map(async (p) => {
@@ -27,14 +27,13 @@ export const getArticles = async(req, res) => {
                 return res.render('home', { articles: undefined, error: 'No article exist' })
             }
         }
-        console.log(articles)
         if(isAdmin){
             return res.render('dashboard', { articles })
         }else{
             return res.render('home', { articles })
         }
     }catch(err){
-        console.log(err)
+        res.json(err)
     }
 }
 
@@ -49,6 +48,6 @@ export const getSingleArticle = async(req, res) => {
         const fileData = JSON.parse(file)
         return res.render('article', { article: fileData, error: undefined })
     }catch(err){
-        console.log(err)
+        res.json(err)
     }
 }

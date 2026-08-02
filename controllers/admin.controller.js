@@ -12,8 +12,8 @@ export const addArticle = async(req, res) => {
         date = date.split(' ').slice(1).join(' ')
         const data = await fs.promises.readdir(path.join('articles'))
         console.log(data.length)
-        const id = data.length ? Math.max(...data.map(p => Number(p.split('.')[0]) + 1)) : 1
-        console.log(id)
+        const id = data.length ? Math.max(...data.filter(p => p.endsWith('.json')).map(p => Number(p.split('.')[0]) + 1)) : 1
+        if (!/^\d+$/.test(id)) return res.status(400).send('Invalid id')
         if(fs.existsSync(path.join('articles', `${id}.json`))){
             console.log('Article title already exist')
             return
@@ -28,11 +28,9 @@ export const addArticle = async(req, res) => {
         
         
         await fs.promises.writeFile(path.join('articles', `${id}.json`), JSON.stringify(newArticle))
-        await getArticles()
-        console.log(articles)
         return res.redirect('/articles')
     }catch(err){
-        console.log(err)
+        res.json(err)
     }
 }
 
@@ -47,7 +45,7 @@ export const getUpdateArticle = async(req, res) => {
         const fileData = JSON.parse(file)
         return res.render('update', { article: fileData, error: undefined })
     }catch(err){
-        console.log(err)
+        res.json(err)
     }
 }
 
@@ -79,7 +77,7 @@ export const updateArticle = async(req, res) => {
         return res.redirect('/articles')
 
     }catch(err){
-        console.log(err)
+        res.json(err)
     }
 }
 
@@ -97,6 +95,6 @@ export const deleteArticle = async(req, res) => {
         return res.redirect('/articles')
         // res.json('article deleted successfully')
     }catch(err){
-        console.log(err)
+        res.json(err)
     }
 }
