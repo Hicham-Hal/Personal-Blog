@@ -4,6 +4,9 @@ import { addArticle, deleteArticle, getUpdateArticle, updateArticle } from '../c
 const route = express.Router()
 
 route.post('/article', addArticle)
+route.get('/', (req, res) => {
+    res.render('dashboard', {articles: undefined})
+})
 route.get('/add', (req, res) => {
     res.render('add', {msg: undefined})
 })
