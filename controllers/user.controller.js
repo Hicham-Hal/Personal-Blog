@@ -31,6 +31,7 @@ export const getArticles = async(req, res) => {
 export const getSingleArticle = async(req, res) => {
     const {id} = req.params
     try{
+        if (!/^\d+$/.test(id)) return res.status(400).send('Invalid id')
         if(!fs.existsSync(path.join('articles', `${id}.json`))){
             res.render('article', {article: undefined, error:'No article found'})
             return

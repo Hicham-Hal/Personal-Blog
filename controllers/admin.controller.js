@@ -60,8 +60,8 @@ export const getUpdateArticle = async(req, res) => {
     try{
         if (!/^\d+$/.test(id)) return res.status(400).send('Invalid id')
         if(!fs.existsSync(path.join('articles', `${id}.json`))){
-            res.render('update', {article: undefined, error:'No article found'})
-            return
+            console.log('Article not found')
+            return res.redirect('/dashboard')
         }
         const file = await fs.promises.readFile(path.join('articles', `${id}.json`), 'utf8')
         const fileData = JSON.parse(file)
@@ -109,7 +109,7 @@ export const deleteArticle = async(req, res) => {
         if (!/^\d+$/.test(id)) return res.status(400).send('Invalid id')
         if(!fs.existsSync(path.join('articles', `${id}.json`))){
             console.log('Article not found')
-            return res.render('/dashboard')
+            return res.redirect('/dashboard')
         }
 
         await fs.promises.rm(path.join('articles', `${id}.json`))
