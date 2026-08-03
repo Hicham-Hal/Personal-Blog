@@ -9,7 +9,12 @@
     <div style="padding: 20px 200px 10px 50px;">
         <div style="display: flex; align-items: center; justify-content: space-between;">
             <h1 style="color: rgb(110, 110, 110);">Personal Blog</h1>
-            <a href="/dashboard/add" style="text-decoration: none;"><button>Add</button></a>
+            <div style="display: flex; align-items: center; gap: 8px;">
+                <form action="/logout" method="post">
+                    <button type="submit">Logout</button>
+                </form>
+                <a href="/dashboard/add" style="text-decoration: none;"><button>Add</button></a>
+            </div>
         </div>
         <% articles?.forEach(article => { %>
                 <div style="display: flex; align-items: center; justify-content: space-between;">
@@ -23,8 +28,15 @@
                 </div>
         <% }) %>
     </div>
-    <% if(!articles || articles.length === 0 || articles === undefined) {%>
-        <h4>No article exist</h4>
-    <% } %>
+    <div>
+        <% if(error){ %>
+            <h4><%= error %></h4>
+        <% } %>
+    </div>
+    <div>
+        <% if(!articles || articles.length === 0 || articles === undefined) {%>
+            <h4>No article exist</h4>
+        <% } %>
+    </div>    
 </body>
 </html>

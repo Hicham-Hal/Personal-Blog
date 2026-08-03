@@ -4,6 +4,8 @@ import userRoute from './routes/user.route.js'
 import path, {dirname} from 'path'
 import { fileURLToPath } from 'url'
 import fs from 'fs'
+import session from 'express-session'
+import authRoute from './routes/auth.route.js'
 
 //auto-create the articles folder
 const __filename = fileURLToPath(import.meta.url)
@@ -28,8 +30,9 @@ app.use(session({
 
 app.set('views', 'views')
 app.set('view engine', 'ejs')
-app.use('/dashboard/', adminRoute)
+app.use('/dashboard', adminRoute)
 app.use('/articles', userRoute)
+app.use('/', authRoute)
 
 //Best appreach using .env
 app.listen(3000, () => {

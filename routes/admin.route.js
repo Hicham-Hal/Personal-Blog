@@ -1,18 +1,18 @@
 import express from 'express'
-import { addArticle, deleteArticle, getUpdateArticle, updateArticle } from '../controllers/admin.controller.js'
+import { addArticle, deleteArticle, getDashArticles, getUpdateArticle, updateArticle } from '../controllers/admin.controller.js'
+import { requiredAdmin } from '../lib/auth.js'
 
 const route = express.Router()
 
-route.post('/article', addArticle)
-route.get('/', (req, res) => {
-    res.render('dashboard', {articles: undefined})
-})
-route.get('/add', (req, res) => {
+route.post('/article', requiredAdmin, addArticle)
+route.post('/article/:id', requiredAdmin, updateArticle)
+route.get('/update/:id', requiredAdmin, getUpdateArticle)
+route.post('/delete/:id', requiredAdmin, deleteArticle)
+route.get('/', requiredAdmin, getDashArticles)
+
+route.get('/add', requiredAdmin, (req, res) => {
     res.render('add', {msg: undefined})
 })
 
-route.post('/article/:id', updateArticle)
-route.get('/update/:id', getUpdateArticle)
-route.post('/delete/:id', deleteArticle)
 
 export default route

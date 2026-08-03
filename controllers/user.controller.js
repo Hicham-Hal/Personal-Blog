@@ -8,7 +8,6 @@ const __dirname = dirname(__filename)
 
 export const getArticles = async(req, res) => {
     let articles = []
-    let isAdmin = true
     try{
         const files = await fs.promises.readdir(path.join('articles'));
         await Promise.all(files.map(async (p) => {
@@ -21,17 +20,9 @@ export const getArticles = async(req, res) => {
             }
         }))
         if(articles.length === 0){
-            if(isAdmin){
-                return res.render('dashboard', { articles: undefined, error: 'No article exist' })
-            }else{
-                return res.render('home', { articles: undefined, error: 'No article exist' })
-            }
+            return res.render('home', { articles: undefined, error: 'No article exist' })
         }
-        if(isAdmin){
-            return res.render('dashboard', { articles })
-        }else{
-            return res.render('home', { articles })
-        }
+        return res.render('home', { articles })
     }catch(err){
         res.json(err)
     }
