@@ -8,9 +8,13 @@
 <body>
      <div style="padding: 5px 30px;">
             <div style="display: block; align-items: center;">
-                <h3 style="color: rgb(70, 70, 70); font-size: 26px;"><%= article.title %></h3>
-                <span style="color: rgb(70, 70, 70); font-size: 18px;"><%= article.date %></span>
-                <p style="color: black; font-size: 16px; margin-right: 300px; line-height: 1.4;" ><%= article.content %></p>
+                <% if(article) { %>
+                    <h3 style="color: rgb(70, 70, 70); font-size: 26px;"><%= article.title %></h3>
+                    <span style="color: rgb(70, 70, 70); font-size: 18px;"><%= article.date %></span>
+                    <p style="color: black; font-size: 16px; margin-right: 300px; line-height: 1.4;" ><%= article.content %></p>
+                <% }else{ %>
+                     <h4><%= typeof error !== 'undefined' ? error : 'No article found' %></h4>
+                <% } %>
             </div>
     </div>
 </body>

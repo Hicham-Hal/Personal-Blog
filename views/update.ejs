@@ -8,13 +8,14 @@
 <body>
     <div>
         <h1>Update Article</h1>
+        <% if(article) { %>
         <form action="/dashboard/article/<%=article.id%>" method="post">
             <div style="display: inline; align-items: center; justify-items: start;">
                 <div style="margin-bottom: 20px;">
                     <input type="text" name="title" id="" placeholder="article Name" value="<%= article.title %>">
                 </div>
                 <div style="margin-bottom: 20px;">
-                    <input type="text" name="" placeholder="Publishig Date" value="<%=article.date%>">
+                    <input type="text" disabled placeholder="Publishig Date" value="<%=article.date%>">
                 </div>
                 <div>
                     <textarea name="content" id="" placeholder="Content"><%= article.content %></textarea>
@@ -22,6 +23,9 @@
                 <button style="margin-top: 20px;" type="submit">Update</button>
             </div>
         </form>
+        <% }else{ %>
+            <h4><%= typeof error !== 'undefined' ? error : 'No article found' %></h4>
+        <% } %>
     </div>
 </body>
 </html>

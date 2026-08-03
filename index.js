@@ -31,7 +31,7 @@ app.use(session({
 app.set('views', 'views')
 app.set('view engine', 'ejs')
 app.use('/dashboard', adminRoute)
-app.use('/articles', userRoute)
+app.use('/', userRoute)
 app.use('/', authRoute)
 
 //Best appreach using .env
