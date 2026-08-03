@@ -87,18 +87,6 @@ The server runs on **http://localhost:3000**.
 | Edit article (admin) | `http://localhost:3000/dashboard/update/:id` |
 | Dashboard (admin) | *not wired up yet — see Known Issues* |
 
-## Known Issues / TODO
-
-Tracking bugs found during manual review, roughly in priority order:
-
-- [ ] **`articles/` folder isn't created automatically** — app throws `ENOENT` on first run until the folder exists.
-- [ ] **Error paths don't send an HTTP response** — several `catch` blocks only `console.log(err)`, so failed requests hang until timeout instead of showing an error.
-- [ ] **No route for `GET /dashboard`** — the admin article list page (`dashboard.ejs`) is never rendered by any route.
-- [ ] **`isAdmin` flag is hardcoded** in `user.controller.js` — needs real logic (or route-based wiring) to actually distinguish admin vs guest views.
-- [ ] **No authentication on `/dashboard/*` routes** — currently anyone can add/edit/delete articles.
-- [ ] **Templates crash on "not found" articles** — `article.ejs` / `update.ejs` assume `article` is always defined.
-- [ ] **Relative link in `home.ejs`** — `href="articles/article/:id"` should be an absolute path (`/articles/article/:id`).
-
 ## Manual Testing
 
 Basic smoke test:
