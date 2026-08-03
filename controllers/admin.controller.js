@@ -35,7 +35,6 @@ export const addArticle = async(req, res) => {
         date = date.split(' ').slice(1).join(' ')
         const data = await fs.promises.readdir(path.join('articles'))
         const id = data.length ? Math.max(...data.filter(p => p.endsWith('.json')).map(p => Number(p.split('.')[0]) + 1)) : 1
-        if (!/^\d+$/.test(id)) return res.status(400).send('Invalid id')
         if(fs.existsSync(path.join('articles', `${id}.json`))){
             return res.render('dashboard', {error: 'Article id already exist'})
 
@@ -59,6 +58,7 @@ export const addArticle = async(req, res) => {
 export const getUpdateArticle = async(req, res) => {
     const {id} = req.params
     try{
+        if (!/^\d+$/.test(id)) return res.status(400).send('Invalid id')
         if(!fs.existsSync(path.join('articles', `${id}.json`))){
             res.render('update', {article: undefined, error:'No article found'})
             return
@@ -75,10 +75,11 @@ export const updateArticle = async(req, res) => {
     const {id} = req.params
     const {title, content} = req.body
     try{
+        if (!/^\d+$/.test(id)) return res.status(400).send('Invalid id')
         let date = new Date().toDateString();
         date = date.split(' ').slice(1).join(' ')
         if(!await fs.existsSync(path.join('articles', `${id}.json`))){
-            return res.render('dashboard', {error: 'articles not found'})
+            return res.redirect('/dashboard')
         }
 
         let data = await fs.promises.readFile(path.join('articles', `${id}.json`), 'utf8')
@@ -105,10 +106,10 @@ export const updateArticle = async(req, res) => {
 export const deleteArticle = async(req, res) => {
     const {id} = req.params
     try{
+        if (!/^\d+$/.test(id)) return res.status(400).send('Invalid id')
         if(!fs.existsSync(path.join('articles', `${id}.json`))){
             console.log('Article not found')
-            res.render('dashboard', {msg: 'article not found'})
-            return
+            return res.render('/dashboard')
         }
 
         await fs.promises.rm(path.join('articles', `${id}.json`))

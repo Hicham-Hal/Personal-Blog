@@ -31,7 +31,7 @@ export const signIn = async(req, res) => {
         req.session.isAdmin = true
         return res.redirect('/dashboard')
     }catch(err){
-        console.log(err)
+        return res.status(500).render('login', {error: 'Something went wrong'})
     }
 }
 
